@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mybb.mapper.calendarMapper">
+  
+  <select id="getList" resultType="com.mybb.ddd.CalendarVO">
+  	select * from calendar
+  </select>
+  
+  
+  
+  </mapper>

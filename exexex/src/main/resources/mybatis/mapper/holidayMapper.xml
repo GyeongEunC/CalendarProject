@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+  <mapper namespace="com.mybb.mapper.holidayMapper">
+  
+  <select id="selectlist" resultType="com.mybb.ddd.HolidayVO">
+  	select fullyear, year, month, day, dow, reason from holiday
+  </select>
+  
+  <insert id="addholiday" parameterType="String" >
+  	insert into holiday values(#{fullyear}, #{year}, #{month}, #{day}, #{dow}, #{reason})
+  </insert>
+  
+  <update id="modify">
+  	
+  </update>
+  
+  
+  </mapper>
