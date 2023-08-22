@@ -11,4 +11,7 @@ public interface calendarMapper {
 
 	// 캘린더 검색
 	public List<CalendarVO> getList();
+	
+	// 오늘 날짜 get
+	public List<CalendarVO> getTodayDate() throws Exception;
 }

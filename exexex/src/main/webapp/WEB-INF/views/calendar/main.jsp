@@ -1,3 +1,7 @@
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.PreparedStatement"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="com.mybb.service.CalendarServiceImpl"%>
 <%@page import="com.mybb.service.CalendarService"%>
 <%@page import="java.util.*"%>
@@ -17,7 +21,7 @@
 	<div class="header">
 		<div class="header_logo">달력</div>
 		<div class="header_nav">
-			<button class="today">오늘 ${getTodayList[0].fullyear}</button>
+			<button class="today">오늘 <br> ${getTodayList[0].fullyear}</button>
 			<button class="lastMonth"><</button>
 			<button class="nextMonth">></button>
 			<span class="dateInfo">${getTodayList[0].year}년
@@ -65,39 +69,38 @@
 				<th>목</th>
 				<th>금</th>
 				<th>토</th>
-				<%-- 					<tr>
-						<td></td>
-						<td></td>
-						<td>${list[ㅑ].day}</td>
-						<!-- 01일 -->
-						<td>${list[1].day}</td>
-						<td>${list[2].day}</td>
-						<td>4</td>
-						<td>5</td>
-					</tr> --%>
+
 
 				<tr>
-
-					<c:forEach var="cal" items="${list}">
-						<c:set var="i" value="0" />
-						<c:set var="j" value="7" />
-						<c:if test="${i%j == 0 }">
+					<c:set var="i" value="0" />
+					<c:set var="j" value="7" />
+					<c:set var="k" value="0" />
+					<c:forEach items="${list }" var="cal">
+						<c:if test="${i%j == 0}">
+							<tr>
 						</c:if>
-							<c:choose>
+						<c:if test="${cal.year == 2023 && cal.month == 08}">
+							<td>${cal.day }</td>
+						</c:if>
+						<c:if test="${i%j == j-1 }">
+				</tr>
+				</c:if>
+				<c:set var="i" value="${i+1 }" />
+				</c:forEach>
+				</tr>
+
+
+
+
+
+				<%-- 
+				
+				<c:choose>
 								<c:when
 									test="${cal.day<31 && cal.year == 2023 && cal.month == 08}">
 									<td>${cal.day}</td>
 								</c:when>
 							</c:choose>
-							<c:if test="${i%j == j-1 }">
-							</c:if>
-								<c:set var="i" value="${i+1 }" />
-					</c:forEach>
-				</tr>
-
-
-
-				<%-- 
 
 				<tr>
 					<td>6</td>

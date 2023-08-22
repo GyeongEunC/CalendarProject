@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.mybb.ddd.CalendarVO;
 import com.mybb.service.CalendarService;
@@ -31,6 +32,11 @@ public class CalendarController {
 		list = service.getList();
 		model.addAttribute("list", list);
 //		System.out.println("dddddddddd"+list);
+		
+		List<CalendarVO> getTodayList;
+		getTodayList = service.getTodayDate();
+		model.addAttribute("getTodayList", getTodayList);
+		System.out.println(getTodayList);
 		
 	}
 }

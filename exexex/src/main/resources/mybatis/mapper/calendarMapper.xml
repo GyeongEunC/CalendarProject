@@ -2,13 +2,21 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
-  <mapper namespace="com.mybb.mapper.calendarMapper">
-  
-  <select id="getList" resultType="com.mybb.ddd.CalendarVO">
-  	select * from calendar
-  </select>
-  
-  
-  
-  </mapper>
+
+<mapper namespace="com.mybb.mapper.calendarMapper">
+
+	<select id="getList" resultType="com.mybb.ddd.CalendarVO">
+		select * from calendar
+	</select>
+
+	<select id="getTodayDate" resultType="com.mybb.ddd.CalendarVO">
+		select * from calendar
+		where fullyear=(
+		select
+		to_char(sysdate,'yyyymmdd') from dual
+		)
+	</select>
+
+
+
+</mapper>

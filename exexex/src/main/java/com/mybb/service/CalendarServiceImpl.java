@@ -19,5 +19,10 @@ public class CalendarServiceImpl implements CalendarService {
 		return ccmapper.getList();
 	}
 
+	@Override
+	public List<CalendarVO> getTodayDate() throws Exception {
+		return ccmapper.getTodayDate();
+	}
+
 
 }

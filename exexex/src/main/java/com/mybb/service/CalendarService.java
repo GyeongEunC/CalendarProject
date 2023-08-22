@@ -9,4 +9,7 @@ public interface CalendarService {
 	// 캘린더 검색
 	public List<CalendarVO> getList();
 	
+	// 오늘 날짜 출력
+	public List<CalendarVO> getTodayDate() throws Exception;
+	
 }
