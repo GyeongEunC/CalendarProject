@@ -7,6 +7,7 @@ public class CalendarVO {
 	private String month;
 	private String day;
 	private String dow;
+	private String d;
 	
 	public String getFullyear() {
 		return fullyear;
@@ -38,11 +39,16 @@ public class CalendarVO {
 	public void setDow(String dow) {
 		this.dow = dow;
 	}
+	public String getD() {
+		return d;
+	}
+	public void setD(String d) {
+		this.d = d;
+	}
 	
 	@Override
 	public String toString() {
 		return "CalendarVO [fullyear=" + fullyear + ", year=" + year + ", month=" + month + ", day=" + day + ", dow="
-				+ dow + "]";
+				+ dow + ", d=" + d + "]";
 	}
-	
 }
