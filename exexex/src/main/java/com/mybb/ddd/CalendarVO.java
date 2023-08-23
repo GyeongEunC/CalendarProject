@@ -2,35 +2,35 @@ package com.mybb.ddd;
 
 public class CalendarVO {
 
-	private String fullyear;
-	private String year;
-	private String month;
-	private String day;
+	private int fullyear;
+	private int year;
+	private int month;
+	private int day;
 	private String dow;
-	private String d;
+	private int d;
 	
-	public String getFullyear() {
+	public int getFullyear() {
 		return fullyear;
 	}
-	public void setFullyear(String fullyear) {
+	public void setFullyear(int fullyear) {
 		this.fullyear = fullyear;
 	}
-	public String getYear() {
+	public int getYear() {
 		return year;
 	}
-	public void setYear(String year) {
+	public void setYear(int year) {
 		this.year = year;
 	}
-	public String getMonth() {
+	public int getMonth() {
 		return month;
 	}
-	public void setMonth(String month) {
+	public void setMonth(int month) {
 		this.month = month;
 	}
-	public String getDay() {
+	public int getDay() {
 		return day;
 	}
-	public void setDay(String day) {
+	public void setDay(int day) {
 		this.day = day;
 	}
 	public String getDow() {
@@ -39,10 +39,10 @@ public class CalendarVO {
 	public void setDow(String dow) {
 		this.dow = dow;
 	}
-	public String getD() {
+	public int getD() {
 		return d;
 	}
-	public void setD(String d) {
+	public void setD(int d) {
 		this.d = d;
 	}
 	
@@ -51,4 +51,5 @@ public class CalendarVO {
 		return "CalendarVO [fullyear=" + fullyear + ", year=" + year + ", month=" + month + ", day=" + day + ", dow="
 				+ dow + ", d=" + d + "]";
 	}
+	
 }

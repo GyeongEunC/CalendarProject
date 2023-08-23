@@ -28,15 +28,19 @@ public class CalendarController {
 	public void main(Model model) throws Exception {
 		log.info("main");
 		
-		List<CalendarVO> list = null;
-		list = service.getList();
+		List<CalendarVO> list = service.getList();
 		model.addAttribute("list", list);
 //		System.out.println("dddddddddd"+list);
+		CalendarVO cvvo = new CalendarVO();
+		System.out.println("vovovo");
+		System.out.println(cvvo.getMonth());
+		System.out.println(cvvo);
+		System.out.println("vo끝");
 		
 		List<CalendarVO> getTodayList;
 		getTodayList = service.getTodayDate();
 		model.addAttribute("getTodayList", getTodayList);
 		System.out.println(getTodayList);
-		
+
 	}
 }

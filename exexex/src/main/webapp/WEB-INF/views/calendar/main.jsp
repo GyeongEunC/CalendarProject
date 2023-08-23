@@ -1,3 +1,6 @@
+<%@page import="org.springframework.ui.Model"%>
+<%@page import="com.mybb.controller.CalendarController"%>
+<%@page import="com.mybb.mapper.calendarMapper"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.PreparedStatement"%>
 <%@page import="java.sql.DriverManager"%>
@@ -18,12 +21,16 @@
 <link rel="stylesheet" type="text/css" href="../../css/calendar.css" />
 </head>
 <body>
+
 	<div class="header">
-		<div class="header_logo">달력</div>
+		<div class="header_logo">Calendar</div>
 		<div class="header_nav">
-			<button class="today">오늘 <br> ${getTodayList[0].fullyear}</button>
+			<button class="today">
+				오늘 <br> ${getTodayList[0].fullyear}
+			</button>
 			<button class="lastMonth"><</button>
-			<button class="nextMonth">></button>
+
+			<button class="nextMonth" onclick="console.log(currentMonth)">></button>
 			<span class="dateInfo">${getTodayList[0].year}년
 				${getTodayList[0].month}월</span>
 		</div>
@@ -59,8 +66,38 @@
 			<button class="btn">등록</button>
 		</form>
 
-
 		<div class="contents_right">
+			<c:set var="currentYear" value="${getTodayList[0].year}" />
+			<%
+			int year = (int) pageContext.getAttribute("currentYear");
+			%>
+			<%-- <%= year %> 년 --%>
+
+			<c:set var="currentMonth" value="${getTodayList[0].month}" />
+			<%
+			int month = (int) pageContext.getAttribute("currentMonth");
+			%>
+
+			<%= month %> 월
+
+			<%
+
+			int total = (year - 1) * 365 + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400;
+
+			int[] lastDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+			//윤년 계산기
+			/* if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
+			lastDay[1] = 29;
+			} else {
+			lastDay[1] = 28;
+			}
+			*/
+			for (int i = 0; i < month - 1; i++) {
+				total += lastDay[i];
+			}
+			total++;
+			int week = total % 7;
+			%>
 			<table class="calendar">
 				<th>일</th>
 				<th>월</th>
@@ -70,76 +107,32 @@
 				<th>금</th>
 				<th>토</th>
 
-
 				<tr>
-					<c:set var="i" value="0" />
-					<c:set var="j" value="7" />
-					<c:set var="k" value="0" />
-					<c:forEach items="${list }" var="cal">
-						<c:if test="${i%j == 0}">
-							<tr>
-						</c:if>
-						<c:if test="${cal.year == 2023 && cal.month == 08}">
-							<td>${cal.day }</td>
-						</c:if>
-						<c:if test="${i%j == j-1 }">
-				</tr>
-				</c:if>
-				<c:set var="i" value="${i+1 }" />
-				</c:forEach>
-				</tr>
-
-
-
-
-
-				<%-- 
-				
-				<c:choose>
-								<c:when
-									test="${cal.day<31 && cal.year == 2023 && cal.month == 08}">
-									<td>${cal.day}</td>
-								</c:when>
-							</c:choose>
-
-				<tr>
-					<td>6</td>
-					<td>7</td>
-					<td>8</td>
-					<td>9</td>
-					<td>10</td>
-					<td>11</td>
-					<td>12</td>
-				</tr>
-				<tr>
-					<td>13</td>
-					<td>14</td>
-					<td>15</td>
-					<td>16</td>
-					<td>17</td>
-					<td>18</td>
-					<td>19</td>
-				</tr>
-				<tr>
-					<td>20</td>
-					<td>21</td>
-					<td>22</td>
-					<td>23</td>
-					<td>24</td>
-					<td>25</td>
-					<td>26</td>
-				</tr>
-				<tr>
-					<td>27</td>
-					<td>28</td>
-					<td>29</td>
-					<td>30</td>
-					<td>31</td>
+					<!-- 공백처리 로직 시작 -->
+					<%
+					for (int i = 1; i <= lastDay[month - 1]; i++) {
+						if (i == 1) {
+							for (int j = 0; j < week; j++) {
+					%>
+					<!-- 공백처리 로직 끝-->
 					<td></td>
-					<td></td>
-					
---%>
+					<%
+					}
+					}
+					%>
+					<td><%=i%></td>
+					<%
+					week++;
+					if (week > 6) {
+						week = 0;
+					%>
 				</tr>
+				<%
+				}
+				}
+				%>
+
+
 			</table>
 		</div>
 </body>
