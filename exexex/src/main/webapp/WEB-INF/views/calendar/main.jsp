@@ -22,19 +22,69 @@
 </head>
 <body>
 
+	<c:set var="currentYear" value="${getTodayList[0].year}" />
+	<%
+	int year = (int) pageContext.getAttribute("currentYear");
+	%>
+	<%-- <%= year %> 년 --%>
+
+	<c:set var="currentMonth" value="${getTodayList[0].month}" />
+	<%
+	int month = (int) pageContext.getAttribute("currentMonth");
+	%>
+
+
 	<div class="header">
 		<div class="header_logo">Calendar</div>
 		<div class="header_nav">
 			<button class="today">
 				오늘 <br> ${getTodayList[0].fullyear}
 			</button>
-			<button class="lastMonth"><</button>
+			<%-- <a href="next?year=<%=year%>&month=<%=month - 1%>">&lt;</a> --%>
+			<!--<span class="pppp">2023</span>년 <span class="ppp">8</span>월 -->
 
-			<button class="nextMonth" onclick="console.log(currentMonth)">></button>
-			<span class="dateInfo">${getTodayList[0].year}년
-				${getTodayList[0].month}월</span>
+
+			<form action="/calendar/main" method="post">
+
+				<button class="nextMonth" onclick="monthMinusHandler()">+</button>
+
+			</form>
+
+
+
+
+
+
+			<span class="currentYear">${getTodayList[0].year}</span>년 <span
+				class="currentMonth">${getTodayList[0].month}</span>월
+
+			<button class="nextMonth" onclick="monthPlusHandler()">+</button>
 		</div>
 	</div>
+
+	<script type="text/javascript">
+		let currentMonth = document.querySelector(".currentMonth");
+		let currentYear = document.querySelector(".currentYear");
+
+		monthPlusHandler = function() {
+			if (currentMonth.innerHTML == 12) {
+				currentMonth.innerHTML = 1;
+				currentYear.innerHTML++;
+			} else {
+				currentMonth.innerHTML++;
+			}
+		};
+		monthMinusHandler = function() {
+			if (currentMonth.innerHTML == 1) {
+				currentMonth.innerHTML = 12;
+				currentYear.innerHTML--;
+			} else {
+				currentMonth.innerHTML--;
+			}
+		};
+	</script>
+
+
 	<div class="contents">
 		<label>휴일 선택</label>
 		<!-- <input type="date" id="h_day" name="h_day" /> -->
@@ -67,24 +117,14 @@
 		</form>
 
 		<div class="contents_right">
-			<c:set var="currentYear" value="${getTodayList[0].year}" />
-			<%
-			int year = (int) pageContext.getAttribute("currentYear");
-			%>
-			<%-- <%= year %> 년 --%>
 
-			<c:set var="currentMonth" value="${getTodayList[0].month}" />
-			<%
-			int month = (int) pageContext.getAttribute("currentMonth");
-			%>
 
-			<%= month %> 월
+
 
 			<%
-
 			int total = (year - 1) * 365 + (year - 1) / 4 - (year - 1) / 100 + (year - 1) / 400;
 
-			int[] lastDay = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+			int[] lastDay = { 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 };
 			//윤년 계산기
 			/* if ((year % 4 == 0 && year % 100 != 0) || (year % 400 == 0)) {
 			lastDay[1] = 29;
@@ -135,11 +175,39 @@
 
 			</table>
 		</div>
+
+		<%-- 		<script type="text/javascript">
+		let month = "<%= month%>";
+		
+		let currentMonth = document.querySelector(".currentMonth");
+		let currentYear = document.querySelector(".currentYear");
+		
+
+		monthPlusHandler = function() {
+			if (currentMonth.innerHTML == 12) {
+				currentMonth.innerHTML = 1;
+				currentYear.innerHTML++;
+			} else {
+				currentMonth.innerHTML++;
+			}
+			console.log(month);
+			month++;
+		};
+		monthMinusHandler = function() {
+			if (currentMonth.innerHTML == 1) {
+				currentMonth.innerHTML = 12;
+				currentYear.innerHTML--;
+			} else {
+				currentMonth.innerHTML--;
+			}
+		};
+	</script> --%>
 </body>
 </html>
 
-<script>
+
+<!-- <script>
 	document.getElementById('h_day').value = new Date().toISOString()
 			.substring(0, 10);
 	;
-</script>
+</script> -->

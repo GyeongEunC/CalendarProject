@@ -24,5 +24,4 @@ public class CalendarServiceImpl implements CalendarService {
 		return ccmapper.getTodayDate();
 	}
 
-
 }
