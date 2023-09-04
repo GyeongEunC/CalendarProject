@@ -33,9 +33,9 @@
 	int month = (int) pageContext.getAttribute("currentMonth");
 	%>
 
-
 	<div class="header">
 		<div class="header_logo">Calendar</div>
+		
 		<div class="header_nav">
 			<button class="today">
 				오늘 <br> ${getTodayList[0].fullyear}
@@ -44,21 +44,15 @@
 			<!--<span class="pppp">2023</span>년 <span class="ppp">8</span>월 -->
 
 
-			<form action="/calendar/main" method="post">
-
+			<form action="/calendar/main" method="get">
 				<button class="nextMonth" onclick="monthMinusHandler()">+</button>
-
 			</form>
-
-
-
-
-
 
 			<span class="currentYear">${getTodayList[0].year}</span>년 <span
 				class="currentMonth">${getTodayList[0].month}</span>월
 
 			<button class="nextMonth" onclick="monthPlusHandler()">+</button>
+			
 		</div>
 	</div>
 
@@ -77,9 +71,11 @@
 		monthMinusHandler = function() {
 			if (currentMonth.innerHTML == 1) {
 				currentMonth.innerHTML = 12;
-				currentYear.innerHTML--;
+				currentYear.innerHTML--;				
 			} else {
-				currentMonth.innerHTML--;
+				//currentMonth.innerHTML--;
+				${getTodayList[0].month} = ${getTodayList[0].month} -1;
+				console.log("asdf" + "${getTodayList[0].month}");
 			}
 		};
 	</script>

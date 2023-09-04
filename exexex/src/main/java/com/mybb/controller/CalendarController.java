@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -39,17 +40,18 @@ public class CalendarController {
 
 //		List<CalendarVO> list = service.getList();
 //		model.addAttribute("list", list);
-//		System.out.println("dddddddddd"+list);
 //		CalendarVO cvvo = new CalendarVO();
-//		System.out.println("vovovo");
-//		System.out.println(cvvo.getMonth());
-//		System.out.println(cvvo);
-//		System.out.println("vo끝");
 
 		List<CalendarVO> getTodayList;
 		getTodayList = service.getTodayDate();
 		model.addAttribute("getTodayList", getTodayList);
-		System.out.println(getTodayList);
+		System.out.println(getTodayList.get(0).getYear());
+		System.out.println(getTodayList.get(0).getMonth());
+		int year = getTodayList.get(0).getYear();
+		int month = getTodayList.get(0).getMonth()-1;
+		System.out.println(year + "년  " + month + "월");
+		
+		//return "/calendar/main";
 	}
 
 	/*
@@ -76,19 +78,44 @@ public class CalendarController {
 	 * 
 	 * } return "redirect:/calendar/main"; }
 	 */
-	
-	@PostMapping("/main")
-	public String addHoliday(CalendarVO cvo, HttpServletRequest request,
-			 HttpServletResponse response) throws Exception {
-		log.info("이전달");
 
-		List<CalendarVO> getTodayList;
-		getTodayList = service.getTodayDate();
-		int year = Integer.parseInt(request.getParameter("year")); 
-		int month =Integer.parseInt(request.getParameter("month"))-1;
+	/*
+	 * @PostMapping("/main") public String addHoliday(CalendarVO cvo,
+	 * HttpServletRequest request, HttpServletResponse response) throws Exception {
+	 * log.info("이전달");
+	 * 
+	 * List<CalendarVO> getTodayList; getTodayList = service.getTodayDate(); int
+	 * year = Integer.parseInt(request.getParameter("year")); int month
+	 * =Integer.parseInt(request.getParameter("month"));
+	 * 
+	 * return "redirect:/calendar/main"; }
+	 */
 
-		return "redirect:/calendar/main";
-	}
-	
-	
+//	@RequestMapping(value = "/main", method = RequestMethod.POST)
+//	public String lastMonth(Model model, @ModelAttribute CalendarVO cvo) throws Exception {
+//		log.info("이전달");
+//
+//		model.addAttribute("cvo", cvo);
+//		List<CalendarVO> getTodayList;
+//		getTodayList = service.getTodayDate();
+//
+//		return "redirect:/calendar/main";
+//	}
+
+	/*
+	 * @GetMapping("/lastmonth") public String next(HttpServletRequest request,
+	 * HttpServletResponse response, Model model) throws Exception {
+	 * log.info("이전달");
+	 * 
+	 * List<CalendarVO> getTodayList; getTodayList = service.getTodayDate();
+	 * model.addAttribute("getTodayList", getTodayList);
+	 * System.out.println(getTodayList);
+	 * 
+	 * request.setCharacterEncoding("utf-8"); int year =
+	 * Integer.parseInt(request.getParameter("year")); int month =
+	 * Integer.parseInt(request.getParameter("month"));
+	 * 
+	 * return "redirect:/calendar/main?year=year&month=month-1"; }
+	 */
+
 }
