@@ -1,14 +1,3 @@
-<%@page import="org.springframework.ui.Model"%>
-<%@page import="com.mybb.controller.CalendarController"%>
-<%@page import="com.mybb.mapper.calendarMapper"%>
-<%@page import="java.sql.ResultSet"%>
-<%@page import="java.sql.PreparedStatement"%>
-<%@page import="java.sql.DriverManager"%>
-<%@page import="java.sql.Connection"%>
-<%@page import="com.mybb.service.CalendarServiceImpl"%>
-<%@page import="com.mybb.service.CalendarService"%>
-<%@page import="java.util.*"%>
-<%@page import="com.mybb.ddd.CalendarVO"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
@@ -28,10 +17,13 @@
 	%>
 	<%-- <%= year %> 년 --%>
 
-	<c:set var="currentMonth" value="${getTodayList[0].month}" />
+	<c:set var="currentMonth" value="${newTodayList[0].month}" />
 	<%
-	int month = (int) pageContext.getAttribute("currentMonth");
+	int month = (int) pageContext.getAttribute("currentMonth")-1;
 	%>
+	<h1>dfasdf</h1>
+	<h1>asd1 ${newTodayList }</h1>
+	<h1>asd2 ${getTodayList[0] }</h1>
 
 	<div class="header">
 		<div class="header_logo">Calendar</div>
@@ -44,8 +36,8 @@
 			<!--<span class="pppp">2023</span>년 <span class="ppp">8</span>월 -->
 
 
-			<form action="/calendar/main" method="get">
-				<button class="nextMonth" onclick="monthMinusHandler()">+</button>
+			<form action="/calendar/lastMonth" method="post">
+				<button class="nextMonth">+</button>
 			</form>
 
 			<span class="currentYear">${getTodayList[0].year}</span>년 <span

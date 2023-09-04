@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.mybb.ddd.CalendarVO;
@@ -42,9 +43,11 @@ public class CalendarController {
 //		model.addAttribute("list", list);
 //		CalendarVO cvvo = new CalendarVO();
 
-		List<CalendarVO> getTodayList;
-		getTodayList = service.getTodayDate();
+		List<CalendarVO> getTodayList  = service.getTodayDate();
+		List<CalendarVO> newTodayList = service.getTodayDate();
+		
 		model.addAttribute("getTodayList", getTodayList);
+		model.addAttribute("newTodayList", newTodayList);
 		System.out.println(getTodayList.get(0).getYear());
 		System.out.println(getTodayList.get(0).getMonth());
 		int year = getTodayList.get(0).getYear();
@@ -52,6 +55,39 @@ public class CalendarController {
 		System.out.println(year + "년  " + month + "월");
 		
 		//return "/calendar/main";
+	}
+	
+	@GetMapping(value = "/lastMonth")
+	public void lastMonth() throws Exception{
+		System.out.println("get");
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/lastMonth")
+	public String lastMonth(Model model) throws Exception{
+		
+		
+		List<CalendarVO> getTodayList = service.getTodayDate();
+		model.addAttribute("getTodayList", getTodayList);
+		System.out.println("모델 : " + model);
+		
+		int year = getTodayList.get(0).getYear();
+		int month = getTodayList.get(0).getMonth();
+		
+		System.out.println(year + "년  " + month + "월");
+		
+		List<CalendarVO> newTodayList = getTodayList;
+		System.out.println("newTodayList" + newTodayList);
+		model.addAttribute("newTodayList", newTodayList);
+		int newMonth = newTodayList.get(0).getMonth();
+		newMonth = newMonth - 1;
+		newTodayList.get(0).setMonth(newMonth);
+		System.out.println("newTodayList" + newTodayList);
+		System.out.println("newMonth" + newMonth);
+		System.out.println("ㅈㅈㅇㅈㅇ");
+		
+		
+		return "foward:/calendar/main";
 	}
 
 	/*
