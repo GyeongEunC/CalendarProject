@@ -3,7 +3,10 @@ package com.mybb.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.http.HttpClient.Redirect;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -43,74 +46,144 @@ public class CalendarController {
 //		model.addAttribute("list", list);
 //		CalendarVO cvvo = new CalendarVO();
 
-		List<CalendarVO> getTodayList  = service.getTodayDate();
-		List<CalendarVO> newTodayList = service.getTodayDate();
+		// 오늘 날짜 상수로 받아옴
+		final List<CalendarVO> getTodayList = service.getTodayDate();
+		final int tFullYear = getTodayList.get(0).getFullyear();
+		final int tYear = getTodayList.get(0).getYear();
+		final int tMonth = getTodayList.get(0).getMonth();
+		final int tDay = getTodayList.get(0).getDay();
+		final String tDow = getTodayList.get(0).getDow();
+		final int tD = getTodayList.get(0).getD();
+		System.out.println("오늘 날짜 상수로 받아 옴 : " + getTodayList);
+
+		// List<> newTodayList = service.getTodayDate();
+		// 상수로 받아온 오늘날자 newTodayList로 넣어줌
+		Map<String, Object> newTodayList = new HashMap<>();
+		newTodayList.put("tFullYear", tFullYear);
+		newTodayList.put("tYear", tYear);
+		newTodayList.put("tMonth", tMonth);
+		newTodayList.put("tDay", tDay);
+		newTodayList.put("tDow", tDow);
+		newTodayList.put("tD", tD);
 		
+		// 모듈화 또는 인자로 넘길 필요성 있으므로 찾아보도록 (0905)
+		
+		System.out.println(newTodayList.get("tYear"));
+		System.out.println(newTodayList.get("tFullYear"));
+		
+		System.out.println("새로운 뉴 투데이 : " + newTodayList);
+
 		model.addAttribute("getTodayList", getTodayList);
 		model.addAttribute("newTodayList", newTodayList);
 		System.out.println(getTodayList.get(0).getYear());
 		System.out.println(getTodayList.get(0).getMonth());
 		int year = getTodayList.get(0).getYear();
-		int month = getTodayList.get(0).getMonth()-1;
+		int month = getTodayList.get(0).getMonth() - 1;
 		System.out.println(year + "년  " + month + "월");
-		
-		//return "/calendar/main";
+
+		// return "/calendar/main";
 	}
-	
+
 	@GetMapping(value = "/lastMonth")
-	public String lastMonth() throws Exception{
+	public String lastMonth() throws Exception {
 		System.out.println("get");
 		return "forward:/calendar/lastMonth";
 	}
-	
+
 	@PostMapping(value = "/lastMonth")
-	public String lastMonth(Model model) throws Exception{
+	public String lastMonth(Model model) throws Exception {
+
+		// 오늘 날짜 상수로 받아옴
+		final List<CalendarVO> getTodayList = service.getTodayDate();
+		final int tFullYear = getTodayList.get(0).getFullyear();
+		final int tYear = getTodayList.get(0).getYear();
+		final int tMonth = getTodayList.get(0).getMonth();
+		final int tDay = getTodayList.get(0).getDay();
+		final String tDow = getTodayList.get(0).getDow();
+		final int tD = getTodayList.get(0).getD();
+		System.out.println("오늘 날짜 상수로 받아 옴 : " + getTodayList);
+
+		// List<> newTodayList = service.getTodayDate();
+		// 상수로 받아온 오늘날자 newTodayList로 넣어줌
+		List newTodayList = new ArrayList<>();
+		newTodayList.add(0, tFullYear);
+		newTodayList.add(1, tYear);
+		newTodayList.add(2, tMonth);
+		newTodayList.add(3, tDay);
+		newTodayList.add(4, tDow);
+		newTodayList.add(5, tD);
+
+		System.out.println("새로운 뉴 투데이 : " + newTodayList);
 		
-		List<CalendarVO> getTodayList = service.getTodayDate();
-		model.addAttribute("getTodayList", getTodayList);
-		System.out.println("모델 : " + model);
-		
-		int year = getTodayList.get(0).getYear();
-		int month = getTodayList.get(0).getMonth();
-		
-		System.out.println(year + "년  " + month + "월");
-		
-		List<CalendarVO> newTodayList = getTodayList;
-		System.out.println("newTodayList" + newTodayList);
 		model.addAttribute("newTodayList", newTodayList);
-		int newMonth = newTodayList.get(0).getMonth();
-		newMonth = newMonth - 1;
-		newTodayList.get(0).setMonth(newMonth);
-		System.out.println("newTodayList" + newTodayList);
-		System.out.println("newMonth" + newMonth);
-		System.out.println("ㅈㅈㅇㅈㅇ");
-		
+		System.out.println(newTodayList);		
+
+//		List<CalendarVO> getTodayList = service.getTodayDate();
+//		model.addAttribute("getTodayList", getTodayList);
+//		System.out.println("모델 : " + model);
+//
+//		int year = getTodayList.get(0).getYear();
+//		int month = getTodayList.get(0).getMonth();
+//
+//		System.out.println(year + "년  " + month + "월");
+//
+//		List<CalendarVO> newTodayList = getTodayList;
+//		System.out.println("newTodayList" + newTodayList);
+//		model.addAttribute("newTodayList", newTodayList);
+//		int newMonth = newTodayList.get(0).getMonth();
+//		newMonth = newMonth - 1;
+//		newTodayList.get(0).setMonth(newMonth);
+//		System.out.println("newTodayList" + newTodayList);
+//		System.out.println("newMonth" + newMonth);
+//		System.out.println("ㅈㅈㅇㅈㅇ");
+
 		return "/calendar/main";
 	}
-	
+
+	@GetMapping(value = "/nextMonth")
+	public String nextMonth() {
+		System.out.println("getget");
+		return "calendar/main";
+	}
+
 	@PostMapping(value = "/nextMonth")
-	public String nextMonth(Model model) throws Exception{
-		
+	public String nextMonth(Model model) throws Exception {
+
 		List<CalendarVO> getTodayList = service.getTodayDate();
 		model.addAttribute("getTodayList", getTodayList);
-		System.out.println("모델 : " + model);
-		
-		int year = getTodayList.get(0).getYear();
-		int month = getTodayList.get(0).getMonth();
-		
-		System.out.println(year + "년  " + month + "월");
-		
-		List<CalendarVO> newTodayList = getTodayList;
-		System.out.println("newTodayList" + newTodayList);
+		// System.out.println("모델 : " + model);
+
+		// int year = getTodayList.get(0).getYear();
+		// int month = getTodayList.get(0).getMonth();
+
+		// System.out.println(year + "년 " + month + "월");
+
+		List<CalendarVO> newTodayList = service.getTodayDate();
+		// System.out.println("newTodayList" + newTodayList);
 		model.addAttribute("newTodayList", newTodayList);
+		System.out.println(newTodayList);
 		int newMonth = newTodayList.get(0).getMonth();
-		newMonth = newMonth +1;
+		int newYear = newTodayList.get(0).getYear();
+		System.out.println("newMonth 이전 : " + newMonth);
+		System.out.println("1. newTodayList" + newTodayList);
+		if (newMonth == 12) {
+			newYear = newYear + 1;
+			newMonth = 1;
+		} else {
+			newMonth = newMonth + 1;
+		}
+		newTodayList.get(0).setYear(newYear);
 		newTodayList.get(0).setMonth(newMonth);
-		System.out.println("newTodayList" + newTodayList);
-		System.out.println("newMonth" + newMonth);
-		System.out.println("nextnext");
-		
-		return "/calendar/main";
+		System.out.println("newMonth 이후 : " + newMonth);
+		model.addAttribute("newTodayList", newTodayList);
+		System.out.println("2. newTodayList" + newTodayList);
+		getTodayList.get(0).setYear(newYear);
+		getTodayList.get(0).setMonth(newMonth);
+		// System.out.println("newTodayList" + newTodayList);
+		// System.out.println("newMonth" + newMonth);
+		// System.out.println("nextnext");
+
+		return "calendar/nextMonth";
 	}
 
 	/*
