@@ -58,14 +58,13 @@ public class CalendarController {
 	}
 	
 	@GetMapping(value = "/lastMonth")
-	public void lastMonth() throws Exception{
+	public String lastMonth() throws Exception{
 		System.out.println("get");
+		return "forward:/calendar/lastMonth";
 	}
 	
-	@ResponseBody
 	@PostMapping(value = "/lastMonth")
 	public String lastMonth(Model model) throws Exception{
-		
 		
 		List<CalendarVO> getTodayList = service.getTodayDate();
 		model.addAttribute("getTodayList", getTodayList);
@@ -86,8 +85,32 @@ public class CalendarController {
 		System.out.println("newMonth" + newMonth);
 		System.out.println("ㅈㅈㅇㅈㅇ");
 		
+		return "/calendar/main";
+	}
+	
+	@PostMapping(value = "/nextMonth")
+	public String nextMonth(Model model) throws Exception{
 		
-		return "foward:/calendar/main";
+		List<CalendarVO> getTodayList = service.getTodayDate();
+		model.addAttribute("getTodayList", getTodayList);
+		System.out.println("모델 : " + model);
+		
+		int year = getTodayList.get(0).getYear();
+		int month = getTodayList.get(0).getMonth();
+		
+		System.out.println(year + "년  " + month + "월");
+		
+		List<CalendarVO> newTodayList = getTodayList;
+		System.out.println("newTodayList" + newTodayList);
+		model.addAttribute("newTodayList", newTodayList);
+		int newMonth = newTodayList.get(0).getMonth();
+		newMonth = newMonth +1;
+		newTodayList.get(0).setMonth(newMonth);
+		System.out.println("newTodayList" + newTodayList);
+		System.out.println("newMonth" + newMonth);
+		System.out.println("nextnext");
+		
+		return "/calendar/main";
 	}
 
 	/*
